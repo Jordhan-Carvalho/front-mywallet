@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
 
-function App() {
+import LoginPage from "./pages/LoginPage/LoginPage";
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <Router>
+        <Switch>
+          <Route path="/" exact component={LoginPage} />
+        </Switch>
+      </Router>
+    </>
   );
 }
 
-export default App;
+const GlobalStyle = createGlobalStyle`
+:root {
+  --darkPurple: #8C11BE;
+  --lightPurple: #A328D6;
+  --titleFont: 'Saira Stencil One', cursive;
+  --generalFont: 'Raleway', sans-serif;
+}
+
+body {
+  font-family: var(--generalFont);
+  color: white;
+}
+
+#root {
+  height: 100vh;
+  width: 100%;
+  background: var(--darkPurple);
+}
+
+`;
