@@ -1,7 +1,11 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useContext } from "react";
+import axios from "axios";
 import styled from "styled-components";
 
 import Spinner from "../../components/Spinner";
+import { validateSignup, validateSignin } from "../../utils/validation";
+import { userContext } from "../../contexts/UserContext";
+import { useHistory } from "react-router-dom";
 
 type FormProps = {
   formState: string;
@@ -12,18 +16,56 @@ export default function Form({ formState, handleChangeFormState }: FormProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
+  const [confirmPassword, setConfirmPass] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
+  const { setUser }: any = useContext(userContext);
 
   const sendLoginInfo = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    try {
+      validateSignin(email, password);
+      const { data } = await axios.post(
+        "http://localhost:3000/api/users/sign-in",
+        {
+          email,
+          password,
+        }
+      );
+      setUser({
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        token: data.token,
+      });
+      setIsLoading(false);
+      history.push("/");
+    } catch (e) {
+      alert(e.message);
+      setIsLoading(false);
+    }
   };
 
   const registerUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  };
+    setIsLoading(true);
+    const newUser = {
+      name,
+      email,
+      password,
+      confirmPassword,
+    };
 
-  const validateSignUp = () => {};
+    try {
+      validateSignup(newUser);
+      await axios.post("http://localhost:3000/api/users/sign-up", newUser);
+      handleChangeFormState();
+    } catch (e) {
+      alert(e.message);
+    }
+    setIsLoading(false);
+  };
 
   const login = formState === "login";
 
@@ -56,7 +98,7 @@ export default function Form({ formState, handleChangeFormState }: FormProps) {
           placeholder="Confirme a senha"
           type="password"
           onChange={(e) => setConfirmPass(e.target.value)}
-          value={confirmPass}
+          value={confirmPassword}
         />
       )}
       <Button disabled={isLoading} type="submit">

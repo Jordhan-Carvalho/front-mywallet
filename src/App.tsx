@@ -2,17 +2,23 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import UserProvider from "./contexts/UserContext";
+import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 
 export default function App() {
   return (
     <>
-      <GlobalStyle />
-      <Router>
-        <Switch>
-          <Route path="/" exact component={LoginPage} />
-        </Switch>
-      </Router>
+      <UserProvider>
+        <GlobalStyle />
+        <Router>
+          <Switch>
+            <Route path="/login" component={LoginPage} />
+            <AuthenticatedRoute path="/" exact component={DashboardPage} />
+          </Switch>
+        </Router>
+      </UserProvider>
     </>
   );
 }
