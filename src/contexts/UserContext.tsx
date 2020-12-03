@@ -8,9 +8,13 @@ export const userContext = createContext();
 export default function UserProvider({ children }: any) {
   const [user, setUser] = useLocalStorage("user", null);
 
-  const value = {
-    user,
-    setUser,
+  const logout = async () => {
+    try {
+      // @ts-ignore
+      setUser(null);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -18,6 +22,7 @@ export default function UserProvider({ children }: any) {
       value={{
         user,
         setUser,
+        logout,
       }}
     >
       {children}

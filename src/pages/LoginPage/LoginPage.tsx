@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { userContext } from "../../contexts/UserContext";
 import Form from "./Form";
 
 export default function LoginPage() {
   const [formState, setFormState] = useState("login");
+  const { user }: any = useContext(userContext);
+  const history = useHistory();
+  console.log(user);
+
+  useEffect(() => {
+    if (user) history.push("/");
+  }, []);
 
   const handleChangeFormState = () => {
     formState === "login" ? setFormState("signup") : setFormState("login");
