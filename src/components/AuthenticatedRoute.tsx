@@ -1,8 +1,16 @@
-import React, { useContext } from "react";
+import React, { ReactNode, useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { userContext } from "../contexts/UserContext";
 
-export default function AuthenticatedRoute({ children, ...rest }: any) {
+type AuthenticatedRouteProps = {
+  children?: ReactNode;
+  [x: string]: any;
+};
+
+export default function AuthenticatedRoute({
+  children,
+  ...rest
+}: AuthenticatedRouteProps) {
   const { user }: any = useContext(userContext);
   console.log(user);
   return (

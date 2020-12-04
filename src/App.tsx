@@ -5,6 +5,7 @@ import { createGlobalStyle } from "styled-components";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UserProvider from "./contexts/UserContext";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
+import InputPage from "./pages/InputPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
         <Router>
           <Switch>
             <Route path="/login" component={LoginPage} />
+            <AuthenticatedRoute path="/input" component={InputPage} />
             <AuthenticatedRoute path="/" exact component={DashboardPage} />
           </Switch>
         </Router>

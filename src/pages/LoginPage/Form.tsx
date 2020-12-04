@@ -6,6 +6,8 @@ import Spinner from "../../components/Spinner";
 import { validateSignup, validateSignin } from "../../utils/validation";
 import { userContext } from "../../contexts/UserContext";
 import { useHistory } from "react-router-dom";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 type FormProps = {
   formState: string;
@@ -118,32 +120,6 @@ const FormContainer = styled.form`
   flex-direction: column;
   align-items: center;
   width: 100%;
-`;
-
-const Input = styled.input`
-  color: black;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  width: 90%;
-  margin-bottom: 15px;
-
-  &::placeholder {
-    color: black;
-  }
-`;
-
-const Button = styled.button`
-  background: var(--lightPurple);
-  color: white;
-  width: 90%;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  font-weight: bold;
-  padding: 10px 0;
-  margin-bottom: 25px;
 `;
 
 const ChangeFormButton = styled.a`

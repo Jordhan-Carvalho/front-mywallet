@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 import Header from "./Header";
 import { userContext } from "../../contexts/UserContext";
@@ -9,18 +10,27 @@ export default function DashboardPage() {
   const { user }: any = useContext(userContext);
   useEffect(() => {}, []);
 
+  // function currencyFormat(moneyValue: number) {
+  //   return (
+  //     "$" +
+  //     num
+  //       .toFixed(2)
+  //       .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+  //   );
+  // }
+
   return (
     <MainContainer>
       <Header userName={user.name} />
       <MainInfo></MainInfo>
       <Footer>
-        <InputBox>
+        <InputBox to={{ pathname: "/input", state: "entrada" }}>
           <IconPlus />
           <p>
             Nova <br /> entrada
           </p>
         </InputBox>
-        <InputBox>
+        <InputBox to={{ pathname: "/input", state: "saida" }}>
           <IconMinus />
           <p>
             Nova <br />
@@ -59,7 +69,7 @@ const Footer = styled.footer`
   align-items: center;
 `;
 
-const InputBox = styled.div`
+const InputBox = styled(Link)`
   height: 100%;
   width: 47%;
   background: var(--lightPurple);
